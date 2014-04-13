@@ -68,8 +68,8 @@ module Katana
         logger = Logging.logger(STDOUT)
         logger.level = :warn
         logger.debug "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
-                return true
-        params.has_key?(:token) ? JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"] : false
+        JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
+        # params.has_key?(:token) ? JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"] : false
       end
 
     end
