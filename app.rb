@@ -45,7 +45,7 @@ module Katana
         # Throws 401 if authorization fails
         def protected!
           return unless ENV["HTTP_USER"]
-          unless authorized_token?
+          unless authorized?
             response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
             throw(:halt, [401, "Not authorized\n"])
           end
