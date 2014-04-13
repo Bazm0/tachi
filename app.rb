@@ -1,5 +1,6 @@
 require 'guillotine'
 require 'redis'
+require 'jwt'
 
 module Katana
     class App < Guillotine::App
@@ -42,7 +43,7 @@ module Katana
         # Throws 401 if authorization fails
         def protected!
           return unless ENV["HTTP_USER"]
-          unless authorized?
+          unless authorized_token?
             response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
             throw(:halt, [401, "Not authorized\n"])
           end
@@ -58,6 +59,12 @@ module Katana
           pass = ENV["HTTP_PASS"]
           @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [user, pass]
         end
+      end
+
+
+      def authorized_token?
+        logger.info(params[:token])
+        params.has_key?(:token) ? JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"] : false
       end
 
     end
