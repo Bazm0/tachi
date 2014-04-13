@@ -25,6 +25,16 @@ module Katana
         "FRAGD URL SHORTENER"
       end
 
+      post '/shorten/:token/:url/(:code)' do
+        status, head, body = settings.service.create(params[:url], params[:code])
+
+        if loc = head['Location']
+          "#{File.join("http://", request.host, loc)}"
+        else
+          500
+        end
+      end
+
       if ENV['TWEETBOT_API']
         # experimental (unauthenticated) API endpoint for tweetbot
         get '/api/create/?' do
@@ -64,9 +74,12 @@ module Katana
         end
       end
 
-
+        # Private: helper method to if decoded authorization token matches the
+        # set environment variables
+        #
+        # Returns true or false
       def authorized_token?
-        @@logger.info "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
+        @@logger.info "<<<<<<<<<<<< #{params.inspect}"
         begin 
           JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
         rescue StandardError => e
