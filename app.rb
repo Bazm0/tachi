@@ -22,7 +22,7 @@ module Katana
       end
 
       get '/' do
-        render template: "views/index"
+        "FRAGD URL SHORTENER"
       end
 
       if ENV['TWEETBOT_API']
