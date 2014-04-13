@@ -6,12 +6,13 @@ require 'logging'
 module Katana
 
     class App < Guillotine::App
+      logger = Logging.logger(STDOUT)
+      logger.level = :warn
       # use redis adapter with redistogo
       uri = URI.parse(ENV["REDISTOGO_URL"])
       REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
       adapter = Guillotine::RedisAdapter.new REDIS
-      set :service => Guillotine::Service.new(adapter, :strip_query => false,
-                                              :strip_anchor => false)
+      set :service => Guillotine::Service.new(adapter, :strip_query => false, :strip_anchor => false)
 
       # authenticate everything except GETs
       before do
@@ -24,18 +25,18 @@ module Katana
         "Shorten all the URLs"
       end
 
-      if ENV['TWEETBOT_API']
-        # experimental (unauthenticated) API endpoint for tweetbot
-        get '/api/create/?' do
-          status, head, body = settings.service.create(params[:url], params[:code])
+      # if ENV['TWEETBOT_API']
+      #   # experimental (unauthenticated) API endpoint for tweetbot
+      #   get '/api/create/?' do
+      #     status, head, body = settings.service.create(params[:url], params[:code])
 
-          if loc = head['Location']
-            "#{File.join("http://", request.host, loc)}"
-          else
-            500
-          end
-        end
-      end
+      #     if loc = head['Location']
+      #       "#{File.join("http://", request.host, loc)}"
+      #     else
+      #       500
+      #     end
+      #   end
+      # end
 
       # helper methods
       helpers do
@@ -65,11 +66,12 @@ module Katana
 
 
       def authorized_token?
-        logger = Logging.logger(STDOUT)
-        logger.level = :warn
         logger.debug "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
-        JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
-        # params.has_key?(:token)  && JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
+        begin 
+          JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
+        rescue StandardError => e
+          return false
+        end
       end
 
     end
