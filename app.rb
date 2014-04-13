@@ -63,7 +63,7 @@ module Katana
 
 
       def authorized_token?
-        puts params.inspect
+        puts "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
         params.has_key?(:token) ? JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"] : false
       end
 
