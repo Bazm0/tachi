@@ -67,7 +67,7 @@ module Katana
 
 
       def authorized_token?
-        @@logger.info "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
+        logger.info "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
         begin 
           JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
         rescue StandardError => e
