@@ -3,11 +3,12 @@ require 'redis'
 require 'jwt'
 require 'logging'
 
+logger = Logging.logger(STDOUT)
+logger.level = :info
+
 module Katana
 
     class App < Guillotine::App
-      @@logger = Logging.logger(STDOUT)
-      @@logger.level = :warn
       # use redis adapter with redistogo
       uri = URI.parse(ENV["REDISTOGO_URL"])
       REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
@@ -66,10 +67,11 @@ module Katana
 
 
       def authorized_token?
-        @@logger.debug "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
+        @@logger.info "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
         begin 
           JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
         rescue StandardError => e
+          logger.error "<<<<<<<<<<<<  Failed Authorization: #{e}"
           return false
         end
       end
