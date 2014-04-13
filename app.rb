@@ -9,7 +9,7 @@ module Katana
       # use redis adapter with redistogo
       uri = URI.parse(ENV["REDISTOGO_URL"])
       REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-      adapter = Guillotine::Adapters::RedisAdapter.new REDIS
+      adapter = Guillotine::RedisAdapter.new REDIS
       set :service => Guillotine::Service.new(adapter, :strip_query => false,
                                               :strip_anchor => false)
 
