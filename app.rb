@@ -4,8 +4,6 @@ require 'jwt'
 require 'logging'
 
 module Katana
-    logger = Logging.logger(STDOUT)
-    logger.level = :warn
 
     class App < Guillotine::App
       # use redis adapter with redistogo
@@ -67,6 +65,8 @@ module Katana
 
 
       def authorized_token?
+        logger = Logging.logger(STDOUT)
+        logger.level = :warn
         logger.debug "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
         params.has_key?(:token) ? JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"] : false
       end
