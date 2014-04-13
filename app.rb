@@ -65,11 +65,11 @@ module Katana
 
 
       def authorized_token?
-        return true
-        # logger = Logging.logger(STDOUT)
-        # logger.level = :warn
-        # logger.debug "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
-        # params.has_key?(:token) ? JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"] : false
+        logger = Logging.logger(STDOUT)
+        logger.level = :warn
+        logger.debug "<<<<<<<<<<<< #{params.inspect} <<<<<<<<<<<<"
+                return true
+        params.has_key?(:token) ? JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"] : false
       end
 
     end
