@@ -25,7 +25,7 @@ module Katana
         "FRAGD URL SHORTENER"
       end
 
-      post '/shorten' do
+      post '/shorten/token/:token/url/:url/code/:code' do
         @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
 
         status, head, body = settings.service.create(params[:url], params[:code])
