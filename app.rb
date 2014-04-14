@@ -30,7 +30,8 @@ module Katana
 
       post '/shorten' do
         @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
-        status, head, body = settings.service.create("http://dev01.dev:3000/communities/3/post/-JGitRPXvJwNx9ucQ7v6-1393429958011", "1234")
+        # status, head, body = settings.service.create("http://dev01.dev:3000/communities/3/post/-JGitRPXvJwNx9ucQ7v6-1393429958011", "1234")
+        status, head, body = settings.service.create(params[:url], params[:code])
         @@logger.info "<<<<<<<<<<<< result <<<<<<<<<<<<< status: #{status} ---- head: #{head} ---- body: #{body}"
 
         if loc = head['Location']
