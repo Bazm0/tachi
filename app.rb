@@ -2,6 +2,7 @@ require 'guillotine'
 require 'redis'
 require 'jwt'
 require 'logging'
+
 require 'active_support/core_ext'
 
 module Katana
