@@ -2,6 +2,7 @@ require 'guillotine'
 require 'redis'
 require 'jwt'
 require 'logging'
+require 'jbuilder'
 
 require 'active_support/core_ext'
 
