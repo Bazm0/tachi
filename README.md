@@ -19,8 +19,8 @@ You can use it exactly as any other guillotine app:
 
 ## Setup
 
-    git clone git://github.com/FragD/katana.git
-    cd katana
+    git clone git://github.com/FragD/tachi.git
+    cd tachi
     heroku create
     heroku addons:add redistogo
     heroku domains:add fra.gd

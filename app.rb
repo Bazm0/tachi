@@ -4,7 +4,7 @@ require 'jwt'
 require 'logging'
 require 'jbuilder'
 
-module Katana
+module Tachi
 
     class App < Guillotine::App
       # Iniitialize logger
