@@ -6,3 +6,4 @@ gem "redis"
 gem "jwt"
 gem "logging"
 gem 'jbuilder', '1.5.3'
+gem 'rails', '4.1'

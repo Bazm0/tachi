@@ -42,6 +42,7 @@ module Katana
         shorten
       end
 
+
       def shorten
         status, head, body = settings.service.create(params[:url], params[:code])
         callback = params[:callback]
