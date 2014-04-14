@@ -14,7 +14,7 @@ module Tachi
       uri = URI.parse(ENV["REDISTOGO_URL"])
       REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
       adapter = Guillotine::RedisAdapter.new REDIS
-      set :service => Guillotine::Service.new(adapter, :strip_query => false, :strip_anchor => false, :required_host => /^(dev01.dev:3000|fragd-features.herokuapp.com|fragd-qa.herokuapp.com|fragd-staging.herokuapp.com|fragd.herokuapp.com|fragd.com)$/)
+      set :service => Guillotine::Service.new(adapter, :strip_query => false, :strip_anchor => false)
 
       before do
         unless request.request_method == "GET"
