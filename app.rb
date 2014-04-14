@@ -28,12 +28,19 @@ module Katana
         "FRAGD URL SHORTENER"
       end
 
-      get '/shorten/' do
+      post '/shorten/' do
         status, head, body = settings.service.create(params[:url], params[:code])
-        callback = params['callback']
+        callback = params[:callback]
         @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
         response = shorten_response(status, head, body) 
         "#{callback}(#{response})"
+      end
+
+      get '/shorten/token/:token/ur/:url/callback/:callback(/code/:code)' do
+        status, head, body = settings.service.create(params[:url], params[:code])
+        callback = params[:callback]
+        @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
+        shorten_response(status, head, body) 
       end
 
       if ENV['TWEETBOT_API']
@@ -47,14 +54,6 @@ module Katana
             500
           end
         end
-      end
-
-      get '/shorten/token/:token/ur/:url/callback/:callback' do
-        status, head, body = settings.service.create(params[:url], params[:code])
-        callback = params[:callback]
-        @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
-        response = shorten_response(status, head, body) 
-        "#{callback}(#{response})"
       end
 
       if ENV['TWEETBOT_API']
