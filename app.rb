@@ -32,7 +32,8 @@ module Katana
         status, head, body = settings.service.create(params[:url], params[:code])
         callback = params['callback']
         @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
-        "#{callback}(#{shorten_response})"
+        response = shorten_response(status, head, body) 
+        "#{callback}(#{response})"
       end
 
       if ENV['TWEETBOT_API']
@@ -88,7 +89,7 @@ module Katana
         end
       end
 
-      def shorten_response
+      def shorten_response(status, head, body) 
         if loc = head['Location']
           Jbuilder.encode do |json|
             json.status status
