@@ -22,10 +22,6 @@ module Tachi
         end
       end
 
-      get '/' do
-        "URL SHORTENER"
-      end
-
       get '/shorten/' do
         shorten
       end
