@@ -89,12 +89,12 @@ module Katana
       #
       # Returns data depenedent on Guillotine Engine response
       def shorten_response(status, head, body) 
-        if loc = head['Location']
+        if loc = head['Location'] 
           Jbuilder.encode do |json|
             json.status status
             json.head head
             json.body body
-            json.short_url "https://" << ENV["HTTP_USER"] << "/#{head[:Location]}"
+            json.short_url "https://" << ENV["HTTP_USER"] << "/#{loc}"
           end
         else
           Jbuilder.encode do |json|
