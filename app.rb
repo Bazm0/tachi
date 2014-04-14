@@ -36,7 +36,7 @@ module Katana
         "#{callback}(#{response})"
       end
 
-      get '/shorten/token/:token/ur/:url/callback/:callback(/code/:code)' do
+      get '/shorten/token/:token/ur/:url/callback/:callback' do
         status, head, body = settings.service.create(params[:url], params[:code])
         callback = params[:callback]
         @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
