@@ -4,11 +4,10 @@ require 'jwt'
 require 'logging'
 require 'jbuilder'
 
-require 'active_support/core_ext'
-
 module Katana
 
     class App < Guillotine::App
+      # Iniitialize logger
       @@logger = Logging.logger(STDOUT)
       @@logger.level = :info
       # use redis adapter with redistogo
@@ -17,11 +16,9 @@ module Katana
       adapter = Guillotine::RedisAdapter.new REDIS
       set :service => Guillotine::Service.new(adapter, :strip_query => false, :strip_anchor => false)
 
-      # authenticate everything except GETs
+      # authenticate everything
       before do
-        unless request.request_method == "GET"
-          protected!
-        end
+        protected!
       end
 
       get '/' do
@@ -30,8 +27,8 @@ module Katana
 
       get '/shorten/' do
         status, head, body = settings.service.create(params[:url], params[:code])
-        callback = params['callback']
-        @@logger.info "=================> shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
+        callback = params[:callback]
+        @@logger.info "=================> START GUILLOTINE\n status: #{status} \n head: #{head} \n body: #{body} \n=================> END GUILLOTINE"
         response = shorten_response(status, head, body) 
         "#{callback}(#{response})"
       end
@@ -48,20 +45,6 @@ module Katana
           end
         end
       end
-
-      if ENV['TWEETBOT_API']
-        # experimental (unauthenticated) API endpoint for tweetbot
-        get '/api/create/?' do
-          status, head, body = settings.service.create(params[:url], params[:code])
-
-          if loc = head['Location']
-            "#{File.join("http://", request.host, loc)}"
-          else
-            500
-          end
-        end
-      end
-
 
       # helper methods
       helpers do
@@ -89,26 +72,29 @@ module Katana
         end
       end
 
-        # Private: helper method to if decoded authorization token matches the
-        # set environment variables
-        #
-        # Returns true or false
+      # Private: helper method to if decoded authorization token matches the
+      # set environment variables
+      #
+      # Returns true or false
       def authorized_token?
-        @@logger.info "<<<<<<<<<<<< #{params.inspect}"
         begin 
           JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
         rescue StandardError => e
-          @@logger.error "<<<<<<<<<<<<  Failed Authorization: #{e}"
+          @@logger.error "=================>  INVALID AUTHENTICATION TOKEN ERROR: #{e}"
           return false
         end
       end
 
+      # Private: helper method to if generate json response
+      #
+      # Returns data depenedent on Guillotine Engine response
       def shorten_response(status, head, body) 
         if loc = head['Location']
           Jbuilder.encode do |json|
             json.status status
             json.head head
             json.body body
+            json.short_url "https://" << ENV["HTTP_USER"] << "/#{head[:Location]}"
           end
         else
           Jbuilder.encode do |json|
