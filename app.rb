@@ -94,7 +94,7 @@ module Katana
             json.status status
             json.head head
             json.body body
-            json.short_url "https://" << ENV["HTTP_USER"] << "/#{loc}"
+            json.short_url "https://" << ENV["SHORT_DOMAIN"] << "/#{loc}"
           end
         else
           Jbuilder.encode do |json|
