@@ -7,6 +7,8 @@ require 'jbuilder'
 module Katana
 
     class App < Guillotine::App
+      before_action :authenticate,  :except => [:general_get]
+
       # Iniitialize logger
       @@logger = Logging.logger(STDOUT)
       @@logger.level = :info
@@ -17,15 +19,30 @@ module Katana
       set :service => Guillotine::Service.new(adapter, :strip_query => false, :strip_anchor => false)
 
       # authenticate everything
-      before do
-        protected!
-      end
+      # before do
+      #   protected!
+      # end
+
+
+      # before do
+      #   unless request.request_method == "GET"
+      #     protected!
+      #   end
+      # end
 
       get '/' do
+        general_get
+      end
+
+      def general_get
         "FRAGD URL SHORTENER"
       end
 
       get '/shorten/' do
+        shorten
+      end
+
+      def shorten
         status, head, body = settings.service.create(params[:url], params[:code])
         callback = params[:callback]
         @@logger.info "=================> START GUILLOTINE\n status: #{status} \n head: #{head} \n body: #{body} \n=================> END GUILLOTINE"
