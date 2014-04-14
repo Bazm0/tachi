@@ -1,4 +1,4 @@
-# Katana [![Code Climate](https://codeclimate.com/github/mrtazz/katana.png)](https://codeclimate.com/github/mrtazz/katana)
+# Katatonic
 
 ## Overview
 Opinionated personal URL shortener which runs on [Heroku][1] and uses [Redis to
@@ -37,13 +37,13 @@ There is a JSONP wrapped custom endpoint, you can add URLs with a `GET` to
 
     https://fragd-url-shortener.herokuapp.com/shorten/?
     token=eyJ0eXAiOiJKV1QiLC6sbd0iOiJIUzI1NiJ9.IjVMWnUyR2czVzhOVHFKYk05SEhaTlNnZCI.no5LH7TYkss-jp7mqj9IywjZef5-r9JkzA2lVBbMijY
-    &url=http://www.somelongdomain/1231231231"
+    &url=http://www.somelongdomain/1231231231
     &callback=JSON_CALLBACK
 
 Keep in mind that this endpoint is authenticated, JWT generated authentication token is required.
 
 ## Thanks
-[@technoweenie][4] for the awesome guillotine and [@mrtazz][8] for his katana work.
+[@technoweenie][4] for the awesome guillotine and [@mrtazz][8] for his katana development.
 
 [1]: http://heroku.com
 [2]: http://redistogo.com
