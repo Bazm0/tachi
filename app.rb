@@ -31,7 +31,7 @@ module Katana
       get '/shorten/' do
         status, head, body = settings.service.create(params[:url], params[:code])
         callback = params['callback']
-        @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
+        @@logger.info "=================> shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
         response = shorten_response(status, head, body) 
         "#{callback}(#{response})"
       end
@@ -47,14 +47,6 @@ module Katana
             500
           end
         end
-      end
-
-      get '/shorten/token/:token/ur/:url/callback/:callback' do
-        status, head, body = settings.service.create(params[:url], params[:code])
-        callback = params[:callback]
-        @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
-        response = shorten_response(status, head, body) 
-        "#{callback}(#{response})"
       end
 
       if ENV['TWEETBOT_API']
