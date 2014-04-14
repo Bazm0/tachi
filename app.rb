@@ -28,7 +28,7 @@ module Katana
       post '/shorten' do
         @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
 
-        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JK5qS0TnbM60j0j6P97-1397053051034l", "abcdefghi")
+        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JIPiq1k6yekkMPjM_mi-1395239119214", "abcdefghi")
 
         @@logger.info "<<<<<<<<<<<< result <<<<<<<<<<<<< status: #{status} ---- head: #{head} ---- body: #{body}"
 
