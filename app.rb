@@ -2,7 +2,7 @@ require 'guillotine'
 require 'redis'
 require 'jwt'
 require 'logging'
-require "active_support/core_ext"
+require 'active_support/core_ext'
 
 module Katana
 
@@ -29,7 +29,7 @@ module Katana
       post '/shorten' do
         @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
 
-        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JIPiq1k6yekkMPjM_mi-1395239119214", "1234)
+        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JIPiq1k6yekkMPjM_mi-1395239119214", "123")
 
         @@logger.info "<<<<<<<<<<<< result <<<<<<<<<<<<< status: #{status} ---- head: #{head} ---- body: #{body}"
 
