@@ -11,43 +11,39 @@ authentication.
 ## Usage
 You can use it exactly as any other guillotine app:
 
-    curl -X POST http://sho.rt --user foo:bar -i -F"url=http://github.com" -F"code=gh"
+    curl -X GET http://fragd-url-shortener.herokuapp.com/shorten -i -d"token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjVMWnUyR2czVzhOVHFKYk05SEhaTlNnZCI.no5LH7TYkss-jp7mqjTcLuEZef5-r9JkzA2lVBbMijY" -d"url=http://somedomain.com/blah" -d"code=abcdef"
+
 
 ## Features
-- Authentication
-- Custom [Tweetbot][7] compatible endpoint
-- Gauges support (to come)
+- Authentication updated to use JWT authentication token 
+- Custom GET endpoint
 
 ## Setup
 
-    git clone git://github.com/mrtazz/katana.git
+    git clone git://github.com/FragD/katana.git
     cd katana
     heroku create
     heroku addons:add redistogo
-    heroku domains:add sho.rt
+    heroku domains:add fra.gd
     git push heroku master
-    # for gauges support
-    heroku config:add GAUGES_TOKEN="token"
-    heroku config:add GAUGES_GAUGE="gauge"
     # for authentication
-    heroku config:add HTTP_USER="theuser"
-    heroku config:add HTTP_PASS="thepass"
+    heroku config:add JWT_ID="jbjadasdasdasd12321eas"
+    heroku config:add JWT_SECRET="908ADD8989adfvasdasdasdadad9897897987DAsASas"
 
-### Tweetbot
-There is a custom endpoint which is compatible with how tweetbot expects custom
-URL shorteners to behave. Activate it by setting
 
-    TWEETBOT_API=true
 
-in your environment variables. After that you can add URLs with a `GET` to
+### API
+There is a JSONP wrapped custom endpoint, you can add URLs with a `GET` to
 
-    http://sho.rt/api/create/?url=http://github.com
+    https://fragd-url-shortener.herokuapp.com/shorten/?
+    token=eyJ0eXAiOiJKV1QiLC6sbd0iOiJIUzI1NiJ9.IjVMWnUyR2czVzhOVHFKYk05SEhaTlNnZCI.no5LH7TYkss-jp7mqj9IywjZef5-r9JkzA2lVBbMijY
+    &url=http://www.somelongdomain/1231231231"
+    &callback=JSON_CALLBACK
 
-Keep in mind that this endpoint is not authenticated.
+Keep in mind that this endpoint is authenticated, JWT generated authentication token is required.
 
 ## Thanks
-[@technoweenie][4] for the awesome guillotine and [@roidrage][5] for
-[s3itch][6] which somehow got me started wanting a personal URL shortener.
+[@technoweenie][4] for the awesome guillotine and [@mrtazz][8] for his katana work.
 
 [1]: http://heroku.com
 [2]: http://redistogo.com
@@ -56,3 +52,4 @@ Keep in mind that this endpoint is not authenticated.
 [5]: https://twitter.com/roidrage
 [6]: https://github.com/mattmatt/s3itch
 [7]: http://tapbots.com/software/tweetbot/
+[8]: http://github.com/mrtazz/
