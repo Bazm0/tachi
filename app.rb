@@ -34,15 +34,6 @@ module Katana
         shorten
       end
 
-      def shorten
-        protected!
-        status, head, body = settings.service.create(params[:url], params[:code])
-        callback = params[:callback]
-        @@logger.info "=================> START GUILLOTINE\n status: #{status} \n head: #{head} \n body: #{body} \n=================> END GUILLOTINE"
-        response = shorten_response(status, head, body)
-        "#{callback}(#{response})"
-      end
-
       if ENV['TWEETBOT_API']
         # experimental (unauthenticated) API endpoint for tweetbot
         get '/api/create/?' do
@@ -58,6 +49,19 @@ module Katana
 
       # helper methods
       helpers do
+
+        # Private: primary shorten API endpoint
+        #
+        # Throws 401 if authorization fails
+        def shorten
+          protected!
+          status, head, body = settings.service.create(params[:url], params[:code])
+          callback = params[:callback]
+          @@logger.info "=================> START GUILLOTINE\n status: #{status} \n head: #{head} \n body: #{body} \n=================> END GUILLOTINE"
+          response = shorten_response(status, head, body)
+          "#{callback}(#{response})"
+        end
+
 
         # Private: helper method to protect URLs with Rack Basic Auth
         #
