@@ -26,6 +26,8 @@ module Katana
       end
 
       post '/shorten/:token/:url(/:code)' do
+        @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
+        
         status, head, body = settings.service.create(params[:url], params[:code])
 
         if loc = head['Location']
