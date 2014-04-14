@@ -1,12 +1,11 @@
-# Katatonic
+# Tachi
 
 ## Overview
 Opinionated personal URL shortener which runs on [Heroku][1] and uses [Redis to
 go][2] as a backend. Shortening is done through the fabulous [Guillotine][3]
 engine and its Redis adapter.
 
-If you set `HTTP_USER` and `HTTP_PASS` all methods except `GETs` require basic
-authentication.
+All methods except shortened URL lookup `GETs` require JWT authentication.
 
 ## Usage
 You can use it exactly as any other guillotine app:
@@ -29,6 +28,8 @@ You can use it exactly as any other guillotine app:
     # for authentication
     heroku config:add JWT_ID="jbjadasdasdasd12321eas"
     heroku config:add JWT_SECRET="908ADD8989adfvasdasdasdadad9897897987DAsASas"
+    # selected custom domain
+    heroku config:add SHORT_DOMAIN="fra.gd" 
 
 
 
