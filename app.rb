@@ -28,15 +28,20 @@ module Katana
       post '/shorten' do
         @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
 
-        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JIPiq1k6yekkMPjM_mi-1395239119214", "abcdefghijkl")
+        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JIPiq1k6yekkMPjM_mi-1395239119214", "abcdefghijklmnop")
 
         @@logger.info "<<<<<<<<<<<< result <<<<<<<<<<<<< status: #{status} ---- head: #{head} ---- body: #{body}"
 
-        if loc = head['Location']
-          "#{File.join("http://", request.host, loc)}"
-        else
-          500
+        respond_to do |format|
+          state = loc == head['Location'] ? 200 : 500
+          format.json { render :json => state }
         end
+
+        # if loc = head['Location']
+        #   "#{File.join("http://", request.host, loc)}"
+        # else
+        #   500
+        # end
       end
 
       if ENV['TWEETBOT_API']
