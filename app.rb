@@ -30,13 +30,18 @@ module Katana
       post '/shorten' do
         @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
 
-        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JIPiq1k6yekkMPjM_mi-1395239119214", "123")
+        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JIPiq1k6yekkMPjM_mi-1395239119214", "1234")
 
         @@logger.info "<<<<<<<<<<<< result <<<<<<<<<<<<< status: #{status} ---- head: #{head} ---- body: #{body}"
 
 
+        Jbuilder.encode do |json|
+          json.status 200
+        end
+
+ 
         # state = loc == head['Location'] ? 200 : 500
-        {status: status}.to_json
+        # {status: status}.to_json
 
 
 
