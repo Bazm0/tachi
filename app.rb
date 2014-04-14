@@ -28,13 +28,13 @@ module Katana
       post '/shorten' do
         @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
 
-        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JIPiq1k6yekkMPjM_mi-1395239119214", "abcdefghijklmnopqrstuvw")
+        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JIPiq1k6yekkMPjM_mi-1395239119214", "12")
 
         @@logger.info "<<<<<<<<<<<< result <<<<<<<<<<<<< status: #{status} ---- head: #{head} ---- body: #{body}"
 
 
-        state = loc == head['Location'] ? 200 : 500
-        {status: state}
+        # state = loc == head['Location'] ? 200 : 500
+        {status: status}
 
 
 
