@@ -36,11 +36,12 @@ module Katana
         "#{callback}(#{response})"
       end
 
-      get '/shorten/token/:token/ur/:url' do
+      get '/shorten/token/:token/ur/:url/callback/:callback(/code/:code)' do
         status, head, body = settings.service.create(params[:url], params[:code])
         callback = params[:callback]
         @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
-        shorten_response(status, head, body) 
+        response = shorten_response(status, head, body) 
+        "#{callback}(#{response})"
       end
 
       if ENV['TWEETBOT_API']
@@ -55,6 +56,20 @@ module Katana
           end
         end
       end
+
+      if ENV['TWEETBOT_API']
+        # experimental (unauthenticated) API endpoint for tweetbot
+        get '/api/create/?' do
+          status, head, body = settings.service.create(params[:url], params[:code])
+
+          if loc = head['Location']
+            "#{File.join("http://", request.host, loc)}"
+          else
+            500
+          end
+        end
+      end
+
 
       # helper methods
       helpers do
