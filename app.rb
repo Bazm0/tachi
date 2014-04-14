@@ -27,8 +27,7 @@ module Katana
       end
 
       def general_get
-        redirect_to "https://www.fragd.com"
-        # "FRAGD URL SHORTENER"
+        "URL SHORTENER"
       end
 
       get '/shorten/' do
@@ -71,6 +70,37 @@ module Katana
           end
         end
 
+        # Private: helper method to if decoded authorization token matches the
+        # set environment variables
+        #
+        # Returns true or false
+        def authorized_token?
+          begin
+            JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
+          rescue StandardError => e
+            @@logger.error "=================>  INVALID AUTHENTICATION TOKEN ERROR: #{e}"
+            return false
+          end
+        end
+
+        # Private: helper method to if generate json response
+        #
+        # Returns data depenedent on Guillotine Engine response
+        def shorten_response(status, head, body)
+          if loc = head['Location']
+            Jbuilder.encode do |json|
+              json.status status
+              json.head head
+              json.body body
+              json.url "http://" << ENV["SHORT_DOMAIN"] << "/#{loc}"
+            end
+          else
+            Jbuilder.encode do |json|
+              json.status 500
+            end
+          end
+        end
+
         # Private: helper method to check if authorization parameters match the
         # set environment variables
         #
@@ -80,37 +110,6 @@ module Katana
           user = ENV["HTTP_USER"]
           pass = ENV["HTTP_PASS"]
           @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [user, pass]
-        end
-      end
-
-      # Private: helper method to if decoded authorization token matches the
-      # set environment variables
-      #
-      # Returns true or false
-      def authorized_token?
-        begin
-          JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
-        rescue StandardError => e
-          @@logger.error "=================>  INVALID AUTHENTICATION TOKEN ERROR: #{e}"
-          return false
-        end
-      end
-
-      # Private: helper method to if generate json response
-      #
-      # Returns data depenedent on Guillotine Engine response
-      def shorten_response(status, head, body)
-        if loc = head['Location']
-          Jbuilder.encode do |json|
-            json.status status
-            json.head head
-            json.body body
-            json.url "http://" << ENV["SHORT_DOMAIN"] << "/#{loc}"
-          end
-        else
-          Jbuilder.encode do |json|
-            json.status 500
-          end
         end
       end
 
