@@ -10,7 +10,7 @@ All methods except shortened URL lookup `GETs` require JWT authentication.
 ## Usage
 You can use it exactly as any other guillotine app:
 
-    curl -X GET http://fragd-url-shortener.herokuapp.com/shorten -i -d"token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjVMWnUyR2czVzhOVHFKYk05SEhaTlNnZCI.no5LH7TYkss-jp7mqjTcLuEZef5-r9JkzA2lVBbMijY" -d"url=http://somedomain.com/blah" -d"code=abcdef"
+    curl -X GET http://fragd-url-shortener.herokuapp.com/shorten -i -d"token=eyJ0eXAiOiJKV1QiLC6sbd0iOiJIUzI1NiJ9.IjVMWnUyR2czVzhOVHFKYk05SEhaTlNnZCI.no5LH7TYkss-jp7mqj9IywjZef5-r9JkzA2lVBbMijY" -d"url=http://somedomain.com/blah" -d"code=abcdef"
 
 
 ## Features
