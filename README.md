@@ -30,7 +30,9 @@ You can use it exactly as any other guillotine app:
     heroku config:add JWT_SECRET="908ADD8989adfvasdasdasdadad9897897987DAsASas"
     # selected custom domain
     heroku config:add SHORT_DOMAIN="fra.gd" 
-
+    # selected root domain to redirect to
+    heroku config:set ROOT_DOMAIN=https://www.fragd.com/ 
+ 
 
 
 ### API
