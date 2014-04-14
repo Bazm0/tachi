@@ -34,7 +34,7 @@ You can use it exactly as any other guillotine app:
 
 
 ### API
-There is a JSONP wrapped custom endpoint, you can add URLs with a `GET` to
+There is a JSONP wrapped custom endpoint, you can add URLs with a `GET` supplying the following parameters:
 
     https://fragd-url-shortener.herokuapp.com/shorten/?
     token=eyJ0eXAiOiJKV1QiLC6sbd0iOiJIUzI1NiJ9.IjVMWnUyR2czVzhOVHFKYk05SEhaTlNnZCI.no5LH7TYkss-jp7mqj9IywjZef5-r9JkzA2lVBbMijY
