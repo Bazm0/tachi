@@ -87,7 +87,7 @@ module Tachi
               json.status status
               json.head head
               json.body body
-              json.url "http://" << ENV["SHORT_DOMAIN"] << "/#{loc}"
+              json.url "https://" << ENV["SHORT_DOMAIN"] << "/#{loc}"
             end
           else
             Jbuilder.encode do |json|
