@@ -16,19 +16,21 @@ module Katana
 
       # authenticate everything except GETs
       before do
-        unless request.request_method == "GET"
-          protected!
-        end
+        # unless request.request_method == "GET"
+        #   protected!
+        # end
       end
 
       get '/' do
         "FRAGD URL SHORTENER"
       end
 
-      post '/shorten/token/:token/url/:url/code/:code' do
+      post '/shorten' do
         @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
 
-        status, head, body = settings.service.create(params[:url], params[:code])
+        status, head, body = settings.service.create("http://dev01.dev:3000/post/-JK5qS0TnbM60j0j6P97-1397053051034l", "abcdefghi")
+
+        @@logger.info "<<<<<<<<<<<< result <<<<<<<<<<<<< status: #{status} ---- head: #{head} ---- body: #{body}"
 
         if loc = head['Location']
           "#{File.join("http://", request.host, loc)}"
