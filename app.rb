@@ -29,22 +29,10 @@ module Katana
       end
 
       post '/shorten/' do
-        @@logger.info "<<<<<<<<<<<< shorten <<<<<<<<<<<<<"
-        # status, head, body = settings.service.create("http://dev01.dev:3000/communities/3/post/-JGitRPXvJwNx9ucQ7v6-1393429958011", "1234")
         status, head, body = settings.service.create(params[:url], params[:code])
-        @@logger.info "<<<<<<<<<<<< result <<<<<<<<<<<<< status: #{status} ---- head: #{head} ---- body: #{body}"
-
-        if loc = head['Location']
-          Jbuilder.encode do |json|
-            json.status status
-            json.head head
-            json.body body
-          end
-        else
-          Jbuilder.encode do |json|
-            json.status 500
-          end
-        end
+        callback = params['callback']
+        @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
+        "#{callback}(#{shorten_response})"
       end
 
       if ENV['TWEETBOT_API']
@@ -97,6 +85,20 @@ module Katana
         rescue StandardError => e
           @@logger.error "<<<<<<<<<<<<  Failed Authorization: #{e}"
           return false
+        end
+      end
+
+      def shorten_response
+        if loc = head['Location']
+          Jbuilder.encode do |json|
+            json.status status
+            json.head head
+            json.body body
+          end
+        else
+          Jbuilder.encode do |json|
+            json.status 500
+          end
         end
       end
 
