@@ -19,9 +19,9 @@ module Katana
 
       # authenticate everything except GETs
       before do
-        # unless request.request_method == "GET"
-        #   protected!
-        # end
+        unless request.request_method == "GET"
+          protected!
+        end
       end
 
       get '/' do
