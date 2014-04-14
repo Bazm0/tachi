@@ -22,13 +22,9 @@ module Katana
         end
       end
 
-      # get '/' do
-      #   general_get
-      # end
-
-      # def general_get
-      #   "URL SHORTENER"
-      # end
+      get '/' do
+        "URL SHORTENER"
+      end
 
       get '/shorten/' do
         shorten
