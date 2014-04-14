@@ -59,11 +59,10 @@ module Tachi
         end
 
 
-        # Private: helper method to protect URLs with Rack Basic Auth
+        # Private: helper method to protect URLs with JWT Auth
         #
         # Throws 401 if authorization fails
         def protected!
-          return unless ENV["HTTP_USER"]
           unless authorized_token?
             response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
             throw(:halt, [401, "Not authorized\n"])
