@@ -28,7 +28,7 @@ module Katana
         "FRAGD URL SHORTENER"
       end
 
-      post '/shorten/' do
+      get '/shorten/' do
         status, head, body = settings.service.create(params[:url], params[:code])
         callback = params['callback']
         @@logger.info "<<<<<<<<<<<< shorten guillotine response:\n status: #{status} \n head: #{head} \n body: #{body}"
