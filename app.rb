@@ -27,7 +27,8 @@ module Katana
       end
 
       def general_get
-        "FRAGD URL SHORTENER"
+        redirect_to "https://www.fragd.com"
+        # "FRAGD URL SHORTENER"
       end
 
       get '/shorten/' do
