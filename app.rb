@@ -21,7 +21,6 @@ module Katana
       #   protected!
       # end
 
-
       before do
         unless request.request_method == "GET"
           protected!
@@ -45,7 +44,7 @@ module Katana
         status, head, body = settings.service.create(params[:url], params[:code])
         callback = params[:callback]
         @@logger.info "=================> START GUILLOTINE\n status: #{status} \n head: #{head} \n body: #{body} \n=================> END GUILLOTINE"
-        response = shorten_response(status, head, body) 
+        response = shorten_response(status, head, body)
         "#{callback}(#{response})"
       end
 
@@ -93,7 +92,7 @@ module Katana
       #
       # Returns true or false
       def authorized_token?
-        begin 
+        begin
           JWT.decode(params[:token], ENV["JWT_SECRET"]) === ENV["JWT_ID"]
         rescue StandardError => e
           @@logger.error "=================>  INVALID AUTHENTICATION TOKEN ERROR: #{e}"
@@ -104,8 +103,8 @@ module Katana
       # Private: helper method to if generate json response
       #
       # Returns data depenedent on Guillotine Engine response
-      def shorten_response(status, head, body) 
-        if loc = head['Location'] 
+      def shorten_response(status, head, body)
+        if loc = head['Location']
           Jbuilder.encode do |json|
             json.status status
             json.head head
