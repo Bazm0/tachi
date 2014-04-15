@@ -35,7 +35,7 @@ You can use it exactly as any other guillotine app:
     heroku config:set ROOT_DOMAIN=https://www.fragd.com/ 
 
 
-## Custom Shortened Domain
+## Custom Short Domain
 To integrate a custom short domain you need to configure related DNS nameservers. 
 e.g. Above fra.gd has been added as a custom domain, and configured using [@AWS Route 53 Heroku configuration ][9]
 
