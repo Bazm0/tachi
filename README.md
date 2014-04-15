@@ -10,7 +10,9 @@ All methods except shortened URL lookup `GETs` require JWT authentication.
 ## Usage
 You can use it exactly as any other guillotine app:
 
-    curl -X GET http://fragd-url-shortener.herokuapp.com/shorten -i -d"token=eyJ0eXAiOiJKV1QiLC6sbd0iOiJIUzI1NiJ9.IjVMWnUyR2czVzhOVHFKYk05SEhaTlNnZCI.no5LH7TYkss-jp7mqj9IywjZef5-r9JkzA2lVBbMijY" -d"url=http://somedomain.com/blah" -d"code=abcdef"
+    curl -X GET https://tachi-url-shortener.herokuapp.com/shorten -i -d"token=eyJ0eXAiOiJKV1QiLC6sbd0iOiJIUzI1NiJ9.IjVMWnUyR2czVzhOVHFKYk05SEhaTlNnZCI.no5LH7TYkss-jp7mqj9IywjZef5-r9JkzA2lVBbMijY" -d"url=http://somedomain.com/blah" -d"code=abcdef"
+
+where `https://tachi-url-shortener.herokuapp.com` is your deployed heroku application hostname
 
 
 ## Features
@@ -23,27 +25,27 @@ You can use it exactly as any other guillotine app:
     cd tachi
     heroku create
     heroku addons:add redistogo
-    heroku domains:add fra.gd
-    heroku domains:add www.fra.gd
+    heroku domains:add zip.ed
+    heroku domains:add www.zip.ed
     git push heroku master
     # for authentication
     heroku config:add JWT_ID="jbjadasdasdasd12321eas"
     heroku config:add JWT_SECRET="908ADD8989adfvasdasdasdadad9897897987DAsASas"
     # selected custom domain
-    heroku config:add SHORT_DOMAIN="fra.gd" 
+    heroku config:add SHORT_DOMAIN="zip.ed" 
     # selected root domain to redirect to
-    heroku config:set ROOT_DOMAIN=https://www.fragd.com/ 
+    heroku config:set ROOT_DOMAIN=https://www.website.com/ 
 
 
 ## Custom Short Domain
 To integrate a custom short domain you need to configure related DNS nameservers. 
-e.g. Above fra.gd has been added as a custom domain, and configured using [@AWS Route 53 Heroku configuration ][9]
+e.g. Above zip.ed has been added as a custom domain, and configured using [@AWS Route 53 Heroku configuration ][9]
 
  
 ### API
 There is a JSONP wrapped custom endpoint, you can add URLs with a `GET` supplying the following parameters:
 
-    https://fragd-url-shortener.herokuapp.com/shorten/?
+    https://tachi-url-shortener.herokuapp.com/shorten/?
     token=eyJ0eXAiOiJKV1QiLC6sbd0iOiJIUzI1NiJ9.IjVMWnUyR2czVzhOVHFKYk05SEhaTlNnZCI.no5LH7TYkss-jp7mqj9IywjZef5-r9JkzA2lVBbMijY
     &url=http://www.somelongdomain/1231231231
     &callback=JSON_CALLBACK
