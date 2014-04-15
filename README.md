@@ -24,6 +24,7 @@ You can use it exactly as any other guillotine app:
     heroku create
     heroku addons:add redistogo
     heroku domains:add fra.gd
+    heroku domains:add www.fra.gd
     git push heroku master
     # for authentication
     heroku config:add JWT_ID="jbjadasdasdasd12321eas"
@@ -32,9 +33,13 @@ You can use it exactly as any other guillotine app:
     heroku config:add SHORT_DOMAIN="fra.gd" 
     # selected root domain to redirect to
     heroku config:set ROOT_DOMAIN=https://www.fragd.com/ 
+
+
+## Custom Shortened Domain
+To integrate a custom short domain you need to configure related DNS nameservers. 
+e.g. Above fra.gd has been added as a custom domain, and configured using [@AWS Route 53 Heroku configuration ][9]
+
  
-
-
 ### API
 There is a JSONP wrapped custom endpoint, you can add URLs with a `GET` supplying the following parameters:
 
@@ -56,3 +61,4 @@ Keep in mind that this endpoint is authenticated, JWT generated authentication t
 [6]: https://github.com/mattmatt/s3itch
 [7]: http://tapbots.com/software/tweetbot/
 [8]: http://github.com/mrtazz/
+[9]: https://devcenter.heroku.com/articles/route-53
